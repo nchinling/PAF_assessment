@@ -10,14 +10,13 @@
     <h1 th:text="${s.name}"></h1>
   
 
-    <th:block th:if="${not #lists.isEmpty(breweries)}">
+    <th:block th:if="${not #lists.isEmpty(beers)}">
     <table>
-        <tr data-th-each="brewery : ${breweries}">
-            <td><p data-th-text="*{brewery.beerName}"></p></td>
-            <td><p data-th-text="*{brewery.description}"></p></td>
-            <td>   <a data-th-href="@{'brewery/' + ${brewery.id}}"
-                        data-th-text="${brewery.id}" ></p></td>
-
+        <tr data-th-each="beer : ${beers}">
+            <td><p data-th-text="*{beer.beerName}"></p></td>
+            <td><p data-th-text="*{beer.beerDescription}"></p></td>
+            <td>   <a data-th-href="@{'brewery/' + ${beer.breweryId}}"
+                        data-th-text="'('+*{beer.breweryId}')'+*{beer.breweryName}" ></p></td>
             </td>
         </tr>
 
@@ -26,7 +25,7 @@
 
     <h3><a href="/view0.html">Back</a></h3>
 
-    <th:block th:if="${#lists.isEmpty(breweries)}">
+    <th:block th:if="${#lists.isEmpty(beers)}">
         <h3>No beers found for this style</h3>
     </th:block>
 

@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Order Placed</title>
 </head>
- <body data-th-object="${order}">
+ <body data-th-object="${orderId}">
     
     <h1>Your order has been placed. </h1>
-    <p>Your order number is <span th:text="*{orderId}"></span> </p>
+    <p>Your order number is <span th:text="${orderId}"></span> </p>
 
     <h3><a href="/view0.html">Back</a></h3>
 

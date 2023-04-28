@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View 2</title>
+</head>
+<body>
+
+    <th:block th:if="${not #lists.isEmpty(brewery)}">
+    <h1 th:text="${brewery.name}"></h1>
+    <p><a href="/view0.html">Back</a></p>
+
+    <table>
+        <tr>
+            <td>Description:</td>
+            <td><p data-th-text="${brewery.description}"></p></td>
+        </tr>
+        <tr>
+            <td>Address:</td>
+            <td>
+                <tr>
+                    <td><span data-th-text="${brewery.address1}"></span></td>
+                </tr>
+                <tr>
+                    <td><span data-th-text="${brewery.address2}"></span></td>
+                </tr>
+                <tr>
+                    <td><span data-th-text="${brewery.city}"></span></td>
+                </tr>
+            </td>
+        </tr>
+        <tr>
+            <td>Phone:</td>
+            <td><span data-th-text="${brewery.phone}"></span></td>
+        </tr>
+        <tr>
+            <td>Website:</td>
+            <td><a href="${brewery.website}">${brewery.website}</a></td>
+        </tr>
+
+    </table>
+
+<form method="POST" data-th-action="@{/placeorder}" data-th-object="${order}" ></form>
+    <!-- Order button -->
+    <tr>
+        <td><button type="submit">Place Order</button></td>
+    </tr>
+    <table>
+        <tr>
+            <td>Name</td>
+            <td>Description</td>
+            <td>Quantity</td>
+        </tr>
+        <tr data-th-each="beer : ${brewery.beers}">
+            <td><span data-th-text="*{beer.beerName}"></span></td>
+            <td><span data-th-text="*{beer.beerDescription}"></span></td>
+            <td><input type="number" name="quantity" data-th:field="*{quantity}"/></td>
+        </tr>
+
+    </table>
+</form>
+    <!-- private int breweryId;
+
+	private List<Beer> beers = new LinkedList<>(); -->
+</th:block>
+
+    <h3><a href="/view0.html">Back</a></h3>
+
+    <th:block th:if="${#lists.isEmpty(brewery.beers)}">
+        <h3>Brewery not found</h3>
+    </th:block>
+    
+</body>
+</html>
