@@ -7,8 +7,10 @@
     <title>Document</title>
 </head>
 <body>
-    <h1> Name of beer </h1>
+    <h1 th:text="${s.name}"></h1>
+  
 
+    <th:block th:if="${not #lists.isEmpty(breweries)}">
     <table>
         <tr data-th-each="brewery : ${breweries}">
             <td><p data-th-text="*{brewery.beerName}"></p></td>
@@ -20,8 +22,15 @@
         </tr>
 
     </table>
+    </th:block>
 
     <h3><a href="/view0.html">Back</a></h3>
-    
+
+    <th:block th:if="${#lists.isEmpty(breweries)}">
+        <h3>No beers found for this style</h3>
+    </th:block>
+
 </body>
 </html>
+
+

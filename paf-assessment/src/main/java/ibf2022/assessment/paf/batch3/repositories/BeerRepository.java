@@ -30,7 +30,7 @@ public class BeerRepository {
 		return jdbcTemplate.query(query, (rs, rownum) -> {
 
             Style style = new Style();
-            style.setStyleId(rs.getInt("cat_id"));
+            style.setStyleId(rs.getInt("id"));
             style.setName(rs.getString("style_name"));
 			//need to obtain count from query
             style.setBeerCount(rs.getInt("beercount"));
@@ -52,9 +52,9 @@ public class BeerRepository {
         //this approach doesn't allow for wildcards
         // rs =  jdbcTemplate.queryForRowSet(SELECT_RSVP_BY_NAME, name);
 
-        while(rs.next()){
-            beers.add(beer.create(rs));
-        }
+        // while(rs.next()){
+        //     beers.add(beer.create(rs));
+        // }
         return beers;
 	}
 

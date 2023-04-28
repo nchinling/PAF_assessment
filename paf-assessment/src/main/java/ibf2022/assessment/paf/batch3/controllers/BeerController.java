@@ -50,20 +50,21 @@ public class BeerController {
 
 	
 	@GetMapping(path="/beer/style/{id}")
-    public String getBeerStyleDetails(@PathVariable String id, Model m, HttpSession session) throws TransferException{
+    public String getBeerStyleDetails(@PathVariable String id, Model m, HttpSession session) {
 
 		Integer cId = Integer.parseInt(id);
 		beerRepo.getBreweriesByBeer(cId);
 
 
 		// model.addAttribute(ATTR_ITEM, new Item());
-		m.addAttribute ("beerName", beerName);
-		m.addAttribute ("description", description);
-		m.addAttribute("breweryName", breweryName);
+		// m.addAttribute (ATTR_STYLE, style);
+		// m.addAttribute ("description", description);
+		// m.addAttribute("breweryName", breweryName);
 
 		//Added 2 Account objects and 1 Transaction object to view1
 		//Account objects added as Transaction doesn't have name of customer. 
        return "view1";
+	}
 	
 
 	//TODO Task 4 - view 2
