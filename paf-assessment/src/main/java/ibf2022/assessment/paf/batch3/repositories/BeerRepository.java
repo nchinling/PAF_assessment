@@ -72,33 +72,46 @@ public class BeerRepository {
 
 
 	// DO NOT CHANGE THE METHOD'S NAME OR THE RETURN TYPE OF THIS METHOD
-	public Optional<Brewery> getBeersFromBrewery(int brewId) {
+    public Optional<Brewery> getBeersFromBrewery(int brewId) {
         // TODO: Task 4
-    
+        
         String query = SELECT_BEERS_FROM_BREWERY;
-    
+        
         SqlRowSet rs = jdbcTemplate.queryForRowSet(query, brewId);
         Optional<Brewery> breweryInfo = Optional.empty();
         List<Beer> beers = new ArrayList<Beer>();
+        
+        Brewery brewery = null;
+        
+        while (rs.next()) {
+            if (brewery == null) {
+                brewery = new Brewery();
+                brewery.setBreweryId(rs.getInt("brewery_id"));
+                brewery.setName(rs.getString("brewery_name"));
+                brewery.setAddress1(rs.getString("address1"));
+                brewery.setAddress2(rs.getString("address2"));
+                brewery.setCity(rs.getString("city"));
+                brewery.setPhone(rs.getString("phone"));
+                brewery.setWebsite(rs.getString("website"));
+                brewery.setDescription(rs.getString("brewery_description"));
+            }
     
-        if (rs.next()) {
-            Brewery brewery = new Brewery();
+            Beer beer = new Beer();
+            beer.setBeerName(rs.getString("beer_name"));
+            beer.setBeerDescription(rs.getString("beer_description"));
     
-            brewery.setBreweryId(rs.getInt("brewery_id"));
-            brewery.setName(rs.getString("brewery_name"));
-            brewery.setAddress1(rs.getString("address1"));
-            brewery.setAddress2(rs.getString("address2"));
-            brewery.setCity(rs.getString("city"));
-            brewery.setPhone(rs.getString("phone"));
-            brewery.setWebsite(rs.getString("website"));
-            brewery.setDescription(rs.getString("brewery_description"));
-
+            beers.add(beer);
+        }
+        
+        if (brewery != null) {
             brewery.setBeers(beers);
-    
             breweryInfo = Optional.of(brewery);
         }
-    
+        
         return breweryInfo;
     }
+    
+
+
     
 }

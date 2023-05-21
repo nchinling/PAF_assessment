@@ -8,7 +8,7 @@
 </head>
 <body>
 
-    <th:block th:if="${not #lists.isEmpty(brewery)}">
+<th:block th:if="${not #lists.isEmpty(brewery)}">
     <h1 data-th-text="${brewery.name}"></h1>
     <p><a href="/view0.html">Back</a></p>
 
@@ -19,28 +19,28 @@
         </tr>
         <tr>
             <td>Address:</td>
-            <td>
-                <tr>
-                    <td><span data-th-text="${brewery.address1}"></span></td>
-                </tr>
-                <tr>
-                    <td><span data-th-text="${brewery.address2}"></span></td>
-                </tr>
-                <tr>
-                    <td><span data-th-text="${brewery.city}"></span></td>
-                </tr>
-            </td>
+            <td><span data-th-text="${brewery.address1}"></span></td>
         </tr>
+        <tr>
+            <td></td>
+            <td><span data-th-text="${brewery.address2}"></span></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><span data-th-text="${brewery.city}"></span></td>
+        </tr>
+        
         <tr>
             <td>Phone:</td>
             <td><span data-th-text="${brewery.phone}"></span></td>
         </tr>
         <tr>
             <td>Website:</td>
-            <td><a href="${brewery.website}">${brewery.website}</a></td>
+            <td><a href="${brewery.website}">Go</a></td>
         </tr>
 
     </table>
+    <br>
 
 <form method="POST" data-th-action="@{/placeorder}" data-th-object="${order}" ></form>
     <!-- Order button -->
@@ -61,14 +61,13 @@
 
     </table>
 </form>
-    <!-- private int breweryId;
 
-	private List<Beer> beers = new LinkedList<>(); -->
+
 </th:block>
 
     <h3><a href="/view0.html">Back</a></h3>
 
-    <th:block th:if="${#lists.isEmpty(brewery.beers)}">
+    <th:block th:if="${#lists.isEmpty(brewery)}">
         <h3>Brewery not found</h3>
     </th:block>
     
