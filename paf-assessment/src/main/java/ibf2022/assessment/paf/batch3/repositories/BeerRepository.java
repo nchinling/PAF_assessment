@@ -48,6 +48,8 @@ public class BeerRepository {
         SqlRowSet rs = null;
 
         rs =  jdbcTemplate.queryForRowSet(query, id);
+
+        System.out.println(">>>>>>>>>I am inside getBreweriesByBeer");
         
         //this approach doesn't allow for wildcards
         // rs =  jdbcTemplate.queryForRowSet(SELECT_RSVP_BY_NAME, name);
@@ -60,54 +62,43 @@ public class BeerRepository {
 
 	private static Beer create(SqlRowSet rs){
         Beer beer = new Beer();
-		beer.setBeerId(rs.getInt("beerid"));
-		beer.setBeerName(rs.getString("beername"));
-		beer.setBeerDescription(rs.getString("description"));
-		beer.setBreweryName(rs.getString("breweryname"));
-		beer.setBreweryId(rs.getInt("brewId"));
+		beer.setBeerId(rs.getInt("beer_id"));
+		beer.setBeerName(rs.getString("beer_name"));
+		beer.setBeerDescription(rs.getString("beer_description"));
+		beer.setBreweryName(rs.getString("brewery_name"));
+		beer.setBreweryId(rs.getInt("brewery_id"));
         return beer;
     }
 
+
 	// DO NOT CHANGE THE METHOD'S NAME OR THE RETURN TYPE OF THIS METHOD
-	public Optional<Brewery> getBeersFromBrewery(Integer brewId) {
-		// TODO: Task 4
-
-		int brewIdd = brewId;
-		String query = SELECT_BEERS_FROM_BREWERY;
-		List<Brewery> breweryList = null;
+	public Optional<Brewery> getBeersFromBrewery(int brewId) {
+        // TODO: Task 4
+    
+        String query = SELECT_BEERS_FROM_BREWERY;
+    
+        SqlRowSet rs = jdbcTemplate.queryForRowSet(query, brewId);
         Optional<Brewery> breweryInfo = Optional.empty();
-        List<Beer> beerList = new ArrayList();
-
-        //Get all breweries
-        breweryList = jdbcTemplate.query(query, (rs, rownum) -> {
-
-			Brewery brewery = new Brewery();
-        
-            brewery.setBreweryId(rs.getInt("brewid"));
-            brewery.setName(rs.getString("brewname"));
+        List<Beer> beers = new ArrayList<Beer>();
+    
+        if (rs.next()) {
+            Brewery brewery = new Brewery();
+    
+            brewery.setBreweryId(rs.getInt("brewery_id"));
+            brewery.setName(rs.getString("brewery_name"));
             brewery.setAddress1(rs.getString("address1"));
             brewery.setAddress2(rs.getString("address2"));
             brewery.setCity(rs.getString("city"));
             brewery.setPhone(rs.getString("phone"));
             brewery.setWebsite(rs.getString("website"));
-            brewery.setDescription(rs.getString("brewdescription"));
-            brewery.setBeers(beerList);
+            brewery.setDescription(rs.getString("brewery_description"));
 
-            return brewery; 
-        });
-
-       
-        for (Brewery brewery : breweryList) {
-            if (brewery.getBreweryId() == brewIdd) {
-                breweryInfo = Optional.of(brewery);
-                break;
-            }
+            brewery.setBeers(beers);
+    
+            breweryInfo = Optional.of(brewery);
         }
-
+    
         return breweryInfo;
-
-
-		// return Optional.empty();
-		// return Optional.ofNullable(brewery);
-	}
+    }
+    
 }

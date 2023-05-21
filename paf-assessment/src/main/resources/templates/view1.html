@@ -8,16 +8,25 @@
 </head>
 <body>
     <h1 th:text="${s.name}"></h1>
-  
 
     <th:block th:if="${not #lists.isEmpty(beers)}">
     <table>
+        <tr>
+            <td>Beer name</td>
+            <td>Description</td>
+            <td>Brewery Name</td>
+        </tr>
         <tr data-th-each="beer : ${beers}">
             <td><p data-th-text="*{beer.beerName}"></p></td>
             <td><p data-th-text="*{beer.beerDescription}"></p></td>
-            <td>   <a data-th-href="@{'brewery/' + ${beer.breweryId}}"
-                        data-th-text="'('+*{beer.breweryId}')'+*{beer.breweryName}" ></p></td>
-            </td>
+            <!-- <td>   <a data-th-href="@{'brewery/' + ${beer.breweryId}}"
+                        data-th-text="'('+*{beer.breweryId}+')'+*{beer.breweryName}" ></a></td>
+            </td> -->
+            <td>   <a data-th-href="@{'/beer/style/brewery/' + ${beer.breweryId}}"
+                data-th-text="'('+*{beer.breweryId}+')'+*{beer.breweryName}" ></a></td>
+            </td>            
+            <!-- (path="/beer/style/brewery/{breweryId}") -->
+    </td>
         </tr>
 
     </table>

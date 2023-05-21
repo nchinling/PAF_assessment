@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import ibf2022.assessment.paf.batch3.models.Beer;
 import ibf2022.assessment.paf.batch3.models.Brewery;
@@ -67,12 +68,15 @@ public class BeerController {
 
 	
 	@GetMapping(path="/beer/style/{id}")
-    public String getBeerStyleDetails(@PathVariable String id, Model model, HttpSession sess) {
+    public String getBeerStyleDetails(@PathVariable String id,  @RequestParam("styleName") String styleName,
+									 Model model, HttpSession sess) {
 
 		Style style= getStyle(sess);
 		Integer cId = Integer.parseInt(id);
 		List<Beer> beers = beerRepo.getBreweriesByBeer(cId);
 
+		style.setName(styleName);
+		System.out.println(">>>>>>>>StyleNameIs>>>>>>>>" + style.getName());
 		model.addAttribute(ATTR_STYLE, style);
 		model.addAttribute(ATTR_BEERS, beers);
  
@@ -82,15 +86,21 @@ public class BeerController {
 
 	//TODO Task 4 - view 2
 
-	@GetMapping(path="/brewery/{brewId}")
+	// @GetMapping(path="/brewery/{breweryId}")
+	// @GetMapping(path="/beer/style/{id}")
 
-    public String getBeersByBreweryId(@PathVariable String brewId, Model model, HttpSession sess) {
+	@GetMapping(path="/beer/style/brewery/{breweryId}")
+	// @GetMapping(path="/brewery/{breweryId}")
+    public String getBeersByBreweryId(@PathVariable String breweryId, Model model, HttpSession sess) {
 
+		System.out.println(">>>>>BreweryIdIs>>>>>" + breweryId);
 		Style style= getStyle(sess);
-		Integer cId = Integer.parseInt(brewId);
-		Optional<Brewery> brewery = beerRepo.getBeersFromBrewery(cId);
+		int cId = Integer.parseInt(breweryId);
+		System.out.println(">>>>>BreweryIdIsAfterParseIs>>>>>" + cId);
+		Optional<Brewery> optBrewery = beerRepo.getBeersFromBrewery(cId);
 	
-		
+		Brewery brewery=optBrewery.get();
+		System.out.println(">>>>>BreweryNameIs>>>>>" + brewery.getName());
 
 		model.addAttribute(ATTR_BREWERY, brewery);
  
@@ -103,10 +113,8 @@ public class BeerController {
 	@PostMapping(path="/brewery/{breweryId}/order", consumes = "application/x-www-form-urlencoded")
 	public String addTodo(@PathVariable String breweryId, @ModelAttribute Brewery brewery, HttpServletRequest httpRequest, Model model, HttpSession sess) {
 
-		// List<Task> todoList = getTodoList(sess);
- 
+	
 		String description = httpRequest.getParameter("description");
-		// Integer brewId = Integer.parseInt(httpRequest.getParameter("breweryId"));
 		
 		String orderId = beerSvc.placeOrder(brewery, breweryId);
 	
@@ -114,7 +122,8 @@ public class BeerController {
 
 		model.addAttribute(ATTR_ORDERID, orderId);
 
-		return "todo_template";
+		// return "todo_template";
+		return "view3";
 	}
 
 

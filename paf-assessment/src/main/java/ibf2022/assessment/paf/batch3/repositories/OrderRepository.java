@@ -23,8 +23,6 @@ public class OrderRepository {
 		
 		// foreign key(`brewery_id`) references breweries(`id`),
 
-    
-      
 		Document orderDoc = new Document()
 				.append("orderId", orderId8Char)
 				.append("date",LocalDate.now().toString())

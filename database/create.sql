@@ -3,7 +3,6 @@
 -- populate the database with the given SQL files
 
 
-
 -- create new user 'ncl' and grant access
 create user 'ncl'@'localhost' identified by 'Password@123456';
 grant ALL PRIVILEGES ON brewery.* TO 'ncl'@'localhost';

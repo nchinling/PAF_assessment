@@ -9,7 +9,7 @@
 <body>
 
     <th:block th:if="${not #lists.isEmpty(brewery)}">
-    <h1 th:text="${brewery.name}"></h1>
+    <h1 data-th-text="${brewery.name}"></h1>
     <p><a href="/view0.html">Back</a></p>
 
     <table>
